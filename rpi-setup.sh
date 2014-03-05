@@ -4,7 +4,7 @@
   RADIODAN_FS=/tmp/radiodan-setup
   
   mkdir -p ${RADIODAN_FS} && \
-    curl -L http://radiodan.net/latest.tar.gz | tar xz --strip-components 1 -C ${RADIODAN_FS}
+    curl -L https://github.com/pixelblend/provision/archive/master.tar.gz | tar xz --strip-components 1 -C ${RADIODAN_FS}
 
 # clean up distro
   apt-get update && \
