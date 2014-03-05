@@ -54,14 +54,19 @@
 # nodejs
   mkdir -pv /opt/node && \
     $(curl -L http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz | tar xz --strip-components 1 -C /opt/node) && \
-  echo 'PATH="/opt/node/bin:$PATH"' >> /etc/profile
+    echo 'PATH="/opt/node/bin:$PATH"' >> /etc/profile
 
 # radiodan apps
-    curl -L https://www.dropbox.com/s/umlovwra498ei0l/radiodan-example.tar.gz | tar xz -C /opt/radiodan/
+    curl -L https://www.dropbox.com/s/umlovwra498ei0l/radiodan-example.tar.gz | tar xz -C /opt/radiodan/ && \
+      mkdir -p /var/run/radiodan && \
+      npm -g install forever && \
+      cp -r ${RADIODAN_FS}/radiodan-server /etc/init.d/radiodan-server && \
+      cp -r ${RADIODAN_FS}/radiodan-web /etc/init.d/radiodan-web && \
+      update-rc.d radiodan-server defaults && \
+      update-rc.d radiodan-web defaults
+
 
 # TODO: add upstart scripts
 
 # Tidying Up
-
-  rm -rf ${RADIODAN_FS}
   # cat /dev/null > ~/.bash_history && history -c

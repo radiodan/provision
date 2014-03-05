@@ -1,0 +1,29 @@
+#!/bin/sh
+#/etc/init.d/radiodan-web
+
+### BEGIN INIT INFO
+# Provides:          radiodan-web
+# Required-Start:    $remote_fs $syslog $radiodan-server
+# Required-Stop:     $remote_fs $syslog $radiodan-server
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Radiodan web
+# Description:       Radiodan web
+### END INIT INFO
+
+export PATH="/opt/node/bin:$PATH"
+
+case "$1" in
+  start)
+  exec forever --sourceDir=/opt/radiodan/web -p /var/run/radiodan ./index.js > /var/log/radiodan/web.log 2>&1
+  ;;
+stop)
+  exec forever stop --sourceDir=/opt/radiodan/web ./index.js
+  ;;
+*)
+  echo "Usage: /etc/init.d/radiodan-web {start|stop}"
+  exit 1
+  ;;
+esac
+
+exit 0

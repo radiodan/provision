@@ -1,0 +1,29 @@
+#!/bin/sh
+#/etc/init.d/radiodan-server
+
+### BEGIN INIT INFO
+# Provides:          radiodan-server
+# Required-Start:    $remote_fs $syslog $network $rabbitmq-server
+# Required-Stop:     $remote_fs $syslog $network $rabbitmq-server
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Radiodan server
+# Description:       Radiodan server
+### END INIT INFO
+
+export PATH="/opt/node/bin:$PATH"
+
+case "$1" in
+  start)
+  exec forever --sourceDir=/opt/radiodan/server -p /var/run/radiodan ./bin/server /opt/radiodan/server/config.json --log-level=debug > /var/log/radiodan/server.log 2>&1
+  ;;
+stop)
+  exec forever stop --sourceDir=/opt/radiodan/server ./bin/server
+  ;;
+*)
+  echo "Usage: /etc/init.d/radiodan-server {start|stop}"
+  exit 1
+  ;;
+esac
+
+exit 0
