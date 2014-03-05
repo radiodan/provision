@@ -1,8 +1,8 @@
 ## Radiodan setup steps
 
 # extract installation files
-  RADIODAN_FS=/tmp/radiodan-setup
-  
+  RADIODAN_FS=/tmp/radiodan-setup/config
+
   mkdir -pv ${RADIODAN_FS} && \
     curl -L https://github.com/pixelblend/provision/archive/master.tar.gz | tar xz --strip-components 1 -C ${RADIODAN_FS}
 
@@ -28,13 +28,13 @@
 # wpa_cli
   apt-get install -y ruby1.9.3 && \
     gem install --no-ri --no-rdoc wpa_cli_web
-  
+
   cp -v ${RADIODAN_FS}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
-  
+
   apt-get install -y dnsmasq && \
     cp -v ${RADIODAN_FS}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf &&
     update-rc.d -f dnsmasq remove
-    
+
   apt-get install -y hostapd wpasupplicant && \
     update-rc.d -f hostapd remove && \
     cp -v ${RADIODAN_FS}/hostapd.conf /etc/hostapd/hostapd.conf && \
@@ -54,16 +54,15 @@
     cp -v ${RADIODAN_FS}/status511.html /opt/radiodan/adhoc/status511.html && \
     chown 755 /opt/radiodan/adhoc/status511.html &&
     rm /etc/nginx/sites-enabled/default
-  
+
 # nodejs
   mkdir -pv /opt/node && \
     $(curl -L http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz | tar xz --strip-components 1 -C /opt/node) && \
   echo 'PATH="/opt/node/bin:$PATH"' >> /etc/profile
 
 # radiodan apps
-  git clone https://github.com/radiodan/radiodan.js.git /opt/radiodan/server
-  git clone https://github.com/radiodan/radiodan-client.js.git /opt/radiodan/web
-  
+    curl -L https://www.dropbox.com/s/umlovwra498ei0l/radiodan-example.tar.gz | tar xz -C /opt/radiodan/
+
 # TODO: add upstart scripts
 
 # Tidying Up
