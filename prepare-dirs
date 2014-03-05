@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+### BEGIN INIT INFO
+# Provides:          prepare-dirs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Required-Start:
+# Required-Stop:
+# Short-Description: Create /var/log directories on tmpfs at startup
+# Description:       Create /var/log directories on tmpfs at startup
+### END INIT INFO
+
+ROOTPATH=/var/log
+
+#
+# main()
+#
+case "${1:-''}" in
+  start)
+    # create the /var/log/nginx needed by webserver
+    for DIR in mpd samba nginx radiodan
+    do
+      if [ ! -d ${ROOTPATH}/${DIR} ]; then
+        mkdir ${ROOTPATH}/${DIR}
+        chmod 777 ${ROOTPATH}/${DIR}
+      fi
+    done
+    ;;
+  stop)
+    ;;
+  restart)
+   ;;
+  reload|force-reload)
+   ;;
+  status)
+   ;;
+  *)
+   echo "Usage: $SELF start"
+   exit 1
+   ;;
+esac

@@ -1,0 +1,49 @@
+#!/bin/bash
+# RPi Network Conf Bootstrapper
+echo `date`
+
+createAdHocNetwork(){
+  echo "Creating ad-hoc network"
+
+  # Wait long enough for wpa_cli to do a thorough scan
+  echo "Starting an access point scan"
+  # Do 6 scans over 1 min
+  for i in {1..6}
+  do
+    /sbin/wpa_cli scan
+    /bin/sleep 10
+  done
+
+  echo "Setting up hostapd access point..."
+  sudo /usr/sbin/hostapd -B /etc/hostapd/hostapd.conf
+  /bin/sleep 2
+
+  echo "Configuring IP..."
+  sudo ifconfig wlan0 10.0.0.200 netmask 255.0.0.0
+  /bin/sleep 2
+}
+
+# Exit early if no wifi dongle
+wifiInterface=$(/sbin/ifconfig | grep -F wlan0)
+if [ -z "$wifiInterface" ]
+then
+  echo "No wifi adapter connected, exiting"
+  exit
+else
+  echo "Wifi adapter connected"
+fi
+
+connected=$(/sbin/wpa_cli status | grep COMPLETED)
+if [ -z "$connected" ]
+then
+  createAdHocNetwork
+  /sbin/start wpa-cli-web
+  /usr/sbin/service dnsmasq start
+  /bin/ln -s /etc/nginx/sites-available/wpa_cli_web_redirect /etc/nginx/sites-enabled/wpa_cli_web_redirect
+else
+  /bin/rm /etc/nginx/sites-enabled/wpa_cli_web_redirect
+fi
+
+/usr/sbin/service nginx reload
+
+#exit 0

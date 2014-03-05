@@ -1,0 +1,16 @@
+server {
+  listen 80;
+  root /opt/radiodan/adhoc/;
+
+  location / {
+    return 511;
+  }
+
+  error_page 511 @status511;
+
+  location @status511 {
+    sub_filter_once off;
+    sub_filter 'raspberrypi.local' $host;
+    rewrite ^(.*)$ /status511.html break;
+  }
+}
