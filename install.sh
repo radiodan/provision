@@ -1,10 +1,6 @@
 ## Radiodan setup steps
 
-# extract installation files
   RADIODAN_FS=/tmp/radiodan-setup/config
-
-  mkdir -pv ${RADIODAN_FS} && \
-    curl -L https://github.com/pixelblend/provision/archive/master.tar.gz | tar xz --strip-components 1 -C ${RADIODAN_FS}
 
 # TODO: Add speed hacks inc. tmpfs
   cp -v ${RADIODAN_FS}/prepare-dirs /etc/init.d/prepare-dirs && \

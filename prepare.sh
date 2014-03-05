@@ -2,7 +2,7 @@
 
 # extract installation files
   RADIODAN_FS=/tmp/radiodan-setup
-  
+
   mkdir -pv ${RADIODAN_FS} && \
     curl -L https://github.com/pixelblend/provision/archive/master.tar.gz | tar xz --strip-components 1 -C ${RADIODAN_FS}
 
