@@ -1,6 +1,6 @@
 ## Radiodan setup steps
 
-  RADIODAN_FS=/tmp/radiodan-setup/config
+  RADIODAN_FS=/home/pi/radiodan-setup/config
 
 # TODO: Add speed hacks inc. tmpfs
   cp -v ${RADIODAN_FS}/prepare-dirs /etc/init.d/prepare-dirs && \
@@ -20,7 +20,7 @@
 
   cp -v ${RADIODAN_FS}/smb.conf /etc/samba/smb.conf && \
     service samba restart
-   
+
   cp -v ${RADIODAN_FS}/smb.service /etc/avahi/services/smb.service && \
     cp -v ${RADIODAN_FS}/ssh.service /etc/avahi/services/ssh.service && \
     service avahi-daemon restart
@@ -69,10 +69,5 @@
       update-rc.d radiodan-web defaults
 
 # Tidying Up
-
-# remove x11 stuff
-  apt-get purge -y x11-common lxde midori scratch && \
-    apt-get autoremove -y && \
-    update-rc.d -f x11-common remove
 
   # cat /dev/null > ~/.bash_history && history -c
