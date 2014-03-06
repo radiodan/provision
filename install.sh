@@ -23,6 +23,7 @@
 
   cp -v ${RADIODAN_FS}/smb.service /etc/avahi/services/smb.service && \
     cp -v ${RADIODAN_FS}/ssh.service /etc/avahi/services/ssh.service && \
+    cp -v ${RADIODAN_FS}/http.service /etc/avahi/services/http.service && \
     service avahi-daemon restart
 
 # wpa_cli
