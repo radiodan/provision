@@ -15,6 +15,7 @@ export PATH="/opt/node/bin:$PATH"
 
 case "$1" in
   start)
+  mkdir -p /var/run/radiodan
   exec forever --sourceDir=/opt/radiodan/web -p /var/run/radiodan ./index.js > /var/log/radiodan/web.log 2>&1
   ;;
 stop)

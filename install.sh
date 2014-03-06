@@ -18,8 +18,12 @@
     mkdir /media/music && chmod 777 -R /media/music && \
     mkdir -pv /opt/radiodan && chown 755 -R /opt/radiodan
 
-   cp -v ${RADIODAN_FS}/smb.conf /etc/samba/smb.conf && \
+  cp -v ${RADIODAN_FS}/smb.conf /etc/samba/smb.conf && \
     service samba restart
+   
+  cp -v ${RADIODAN_FS}/smb.service /etc/avahi/services/smb.service && \
+    cp -v ${RADIODAN_FS}/ssh.service /etc/avahi/services/ssh.service && \
+    service avahi-daemon restart
 
 # wpa_cli
   apt-get install -y ruby1.9.3 && \
@@ -58,15 +62,17 @@
 
 # radiodan apps
     curl -L https://www.dropbox.com/s/umlovwra498ei0l/radiodan-example.tar.gz | tar xz -C /opt/radiodan/ && \
-      mkdir -p /var/run/radiodan && \
-      npm -g install forever && \
-      cp -r ${RADIODAN_FS}/radiodan-server /etc/init.d/radiodan-server && \
-      cp -r ${RADIODAN_FS}/radiodan-web /etc/init.d/radiodan-web && \
+      /opt/node/bin/npm -g install forever && \
+      cp -v ${RADIODAN_FS}/radiodan-server /etc/init.d/radiodan-server && \
+      cp -v ${RADIODAN_FS}/radiodan-web /etc/init.d/radiodan-web && \
       update-rc.d radiodan-server defaults && \
       update-rc.d radiodan-web defaults
 
-
-# TODO: add upstart scripts
-
 # Tidying Up
+
+# remove x11 stuff
+  apt-get purge -y x11-common lxde midori scratch && \
+    apt-get autoremove -y && \
+    update-rc.d -f x11-common remove
+
   # cat /dev/null > ~/.bash_history && history -c
