@@ -51,6 +51,7 @@
 # nginx
   apt-get install -y nginx && \
     cp -v ${RADIODAN_FS}/wpa_cli_web_redirect /etc/nginx/sites-available/wpa_cli_web_redirect && \
+    cp -v ${RADIODAN_FS}/radiodan_client /etc/nginx/sites-available/radiodan_client && \
     cp -v ${RADIODAN_FS}/status511.html /opt/radiodan/adhoc/status511.html && \
     chown 755 /opt/radiodan/adhoc/status511.html &&
     rm /etc/nginx/sites-enabled/default

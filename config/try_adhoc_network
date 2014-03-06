@@ -39,9 +39,11 @@ then
   createAdHocNetwork
   /sbin/start wpa-cli-web
   /usr/sbin/service dnsmasq start
-  /bin/ln -s /etc/nginx/sites-available/wpa_cli_web_redirect /etc/nginx/sites-enabled/wpa_cli_web_redirect
+  /bin/rm /etc/nginx/sites-enabled/radiodan_client
+  /bin/ln -sf /etc/nginx/sites-available/wpa_cli_web_redirect /etc/nginx/sites-enabled/wpa_cli_web_redirect
 else
   /bin/rm /etc/nginx/sites-enabled/wpa_cli_web_redirect
+  /bin/ln -sf /etc/nginx/sites-available/radiodan_client /etc/nginx/sites-enabled/radiodan_client
 fi
 
 /usr/sbin/service nginx reload
