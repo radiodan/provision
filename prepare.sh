@@ -6,6 +6,9 @@
   mkdir -pv ${RADIODAN_FS} && \
     curl -L https://github.com/pixelblend/provision/archive/master.tar.gz | tar xz --strip-components 1 -C ${RADIODAN_FS}
 
+# create .ssh dir to place authorised_keys later
+  mkdir -pv /home/pi/.ssh
+
 # clean up distro
   apt-get update
 
