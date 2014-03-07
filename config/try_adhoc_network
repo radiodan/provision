@@ -23,11 +23,27 @@ createAdHocNetwork(){
   /bin/sleep 2
 }
 
+showAccessPoint() {
+  /bin/rm /etc/nginx/sites-enabled/radiodan_client
+  /bin/ln -sf /etc/nginx/sites-available/wpa_cli_web_redirect /etc/nginx/sites-enabled/wpa_cli_web_redirect
+
+  /usr/sbin/service nginx reload
+}
+
+showRadiodanClient() {
+  /bin/rm /etc/nginx/sites-enabled/wpa_cli_web_redirect
+  /bin/ln -sf /etc/nginx/sites-available/radiodan_client /etc/nginx/sites-enabled/radiodan_client
+
+  /usr/sbin/service nginx reload
+}
+
+
 # Exit early if no wifi dongle
 wifiInterface=$(/sbin/ifconfig | grep -F wlan0)
 if [ -z "$wifiInterface" ]
 then
   echo "No wifi adapter connected, exiting"
+  showRadiodanClient
   exit
 else
   echo "Wifi adapter connected"
@@ -39,13 +55,10 @@ then
   createAdHocNetwork
   /sbin/start wpa-cli-web
   /usr/sbin/service dnsmasq start
-  /bin/rm /etc/nginx/sites-enabled/radiodan_client
-  /bin/ln -sf /etc/nginx/sites-available/wpa_cli_web_redirect /etc/nginx/sites-enabled/wpa_cli_web_redirect
+  showAccessPoint
 else
-  /bin/rm /etc/nginx/sites-enabled/wpa_cli_web_redirect
-  /bin/ln -sf /etc/nginx/sites-available/radiodan_client /etc/nginx/sites-enabled/radiodan_client
+  showRadiodanClient
 fi
 
-/usr/sbin/service nginx reload
 
 #exit 0
