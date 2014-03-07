@@ -13,6 +13,9 @@
   apt-get purge -y lxde midori scratch && \
     apt-get autoremove -y
 
+# upgrade remaining packages
+  apt-get upgrade -y
+
 # update firmware
   apt-get install -y rpi-update && rpi-update
 
