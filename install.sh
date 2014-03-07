@@ -7,7 +7,10 @@
     chmod +x /etc/init.d/prepare-dirs && \
     update-rc.d prepare-dirs defaults 01 99
 
-# TODO: Hostname setting
+# Hostname setting when /boot/hostname is written
+  cp -rv ${RADIODAN_FS}/hostname-change /etc/init.d/hostname-change && \
+    chmod +x /etc/init.d/hostname-change && \
+    update-rc.d hostname-change defaults 01 99
 
 # install radiodan essentials, stop mpd from loading on boot
   apt-get install -y alsa-utils mpd mpc vim rabbitmq-server && \

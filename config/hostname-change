@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+### BEGIN INIT INFO
+# Provides:          hostname-change
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Required-Start:
+# Required-Stop:
+# Short-Description: Change hostname on boot
+# Description:       Change hostname on boot
+### END INIT INFO
+
+FILE=/boot/hostname
+
+#
+# main()
+#
+case "${1:-''}" in
+  start)
+    if [ -f $FILE ]; then
+      # trim newlines from new host
+      NEWHOST=$(/bin/cat $FILE | /usr/bin/head -n1)
+
+      if [ -z "$NEWHOST" ]; then
+        exit 0
+      fi
+
+      OLDHOST=$(/bin/hostname)
+
+      /bin/echo $NEWHOST > /etc/hostname && \
+      /bin/hostname $NEWHOST && \
+      /bin/cp /etc/hosts /etc/hosts.bak && \
+      /bin/sed -e 's/'$OLDHOST'/'$NEWHOST'/g' /etc/hosts.bak > /etc/hosts && \
+      /usr/sbin/service avahi-daemon restart
+      /bin/rm $FILE
+    fi
+    ;;
+  stop)
+    ;;
+  restart)
+   ;;
+  reload|force-reload)
+   ;;
+  status)
+   ;;
+  *)
+   echo "Usage: $SELF start"
+   exit 1
+   ;;
+esac
