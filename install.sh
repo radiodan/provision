@@ -74,6 +74,12 @@
     $(curl -L http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz | tar xz --strip-components 1 -C /opt/node) && \
     echo 'PATH="/opt/node/bin:$PATH"' >> /etc/profile
 
+# WiringPi library
+  rm -rf /tmp/wiringPi && \
+  git clone git://git.drogon.net/wiringPi /tmp/wiringPi && \
+    cd /tmp/wiringPi && \
+    ./build
+
 # radiodan apps
     curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.2.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/ && \
       curl -L https://github.com/radiodan/client_web_example/releases/download/v0.1.0/radiodan-web.tar.gz | tar xz -C /opt/radiodan/ && \
@@ -83,6 +89,12 @@
       cp -v ${RADIODAN_CONF}/radiodan-web /etc/init.d/radiodan-web && \
       update-rc.d radiodan-server defaults && \
       update-rc.d radiodan-web defaults
+
+# Install physical UI
+  mkdir -p /opt/radiodan/physical-ui/ && \
+    curl -L https://github.com/radiodan/physical-ui/releases/download/v0.0.1/physical-ui.tar.gz | tar xz --strip-components 1 -C /opt/radiodan/physical-ui && \
+    cp -v ${RADIODAN_FS}/radiodan-physical-ui /etc/init.d/radiodan-physical-ui && \
+    update-rc.d radiodan-physical-ui defaults
 
 # Tidying Up
 
