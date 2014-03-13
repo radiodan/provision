@@ -1,14 +1,14 @@
 ## Radiodan setup steps
 
-  RADIODAN_FS=/home/pi/radiodan-setup/config
+  RADIODAN_CONF=/home/pi/radiodan-setup/config
 
 # TODO: Add speed hacks inc. tmpfs
-  cp -v ${RADIODAN_FS}/prepare-dirs /etc/init.d/prepare-dirs && \
+  cp -v ${RADIODAN_CONF}/prepare-dirs /etc/init.d/prepare-dirs && \
     chmod +x /etc/init.d/prepare-dirs && \
     update-rc.d prepare-dirs defaults 01 99
 
 # Hostname setting when /boot/hostname is written
-  cp -rv ${RADIODAN_FS}/hostname-change /etc/init.d/hostname-change && \
+  cp -rv ${RADIODAN_CONF}/hostname-change /etc/init.d/hostname-change && \
     chmod +x /etc/init.d/hostname-change && \
     update-rc.d hostname-change defaults 01 99
 
@@ -17,49 +17,49 @@
     update-rc.d -f mpd remove
 
   # add ALSA conf to set usb as default audio device
-  cp -v ${RADIODAN_FS}/alsa-base.conf /etc/modprobe.d/alsa-base.conf
+  cp -v ${RADIODAN_CONF}/alsa-base.conf /etc/modprobe.d/alsa-base.conf
 
 # samba && share music
   apt-get install -y samba avahi-daemon && \
     mkdir /media/music && chmod 777 -R /media/music && \
     mkdir -pv /opt/radiodan && chown 755 -R /opt/radiodan
 
-  cp -v ${RADIODAN_FS}/smb.conf /etc/samba/smb.conf && \
+  cp -v ${RADIODAN_CONF}/smb.conf /etc/samba/smb.conf && \
     service samba restart
 
-  cp -v ${RADIODAN_FS}/smb.service /etc/avahi/services/smb.service && \
-    cp -v ${RADIODAN_FS}/ssh.service /etc/avahi/services/ssh.service && \
-    cp -v ${RADIODAN_FS}/http.service /etc/avahi/services/http.service && \
+  cp -v ${RADIODAN_CONF}/smb.service /etc/avahi/services/smb.service && \
+    cp -v ${RADIODAN_CONF}/ssh.service /etc/avahi/services/ssh.service && \
+    cp -v ${RADIODAN_CONF}/http.service /etc/avahi/services/http.service && \
     service avahi-daemon restart
 
 # wpa_cli
   apt-get install -y ruby1.9.3 && \
     gem install --no-ri --no-rdoc wpa_cli_web
 
-  cp -v ${RADIODAN_FS}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
+  cp -v ${RADIODAN_CONF}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
 
   apt-get install -y dnsmasq && \
-    cp -v ${RADIODAN_FS}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf &&
+    cp -v ${RADIODAN_CONF}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf &&
     update-rc.d -f dnsmasq remove
 
   apt-get install -y hostapd wpasupplicant && \
     update-rc.d -f hostapd remove && \
-    cp -v ${RADIODAN_FS}/hostapd.conf /etc/hostapd/hostapd.conf && \
-    cp -v ${RADIODAN_FS}/interfaces /etc/network/interfaces && \
-    cp -v ${RADIODAN_FS}/rc.local /etc/rc.local && \
+    cp -v ${RADIODAN_CONF}/hostapd.conf /etc/hostapd/hostapd.conf && \
+    cp -v ${RADIODAN_CONF}/interfaces /etc/network/interfaces && \
+    cp -v ${RADIODAN_CONF}/rc.local /etc/rc.local && \
     mkdir -pv /opt/radiodan/adhoc && \
     chmod 755 -R /opt/radiodan/adhoc && \
-    cp -v ${RADIODAN_FS}/try_adhoc_network /opt/radiodan/adhoc/try_adhoc_network && \
+    cp -v ${RADIODAN_CONF}/try_adhoc_network /opt/radiodan/adhoc/try_adhoc_network && \
     chmod +x /opt/radiodan/adhoc/try_adhoc_network && \
-    cp -v ${RADIODAN_FS}/wpa-conf-copier.conf /etc/init/wpa-conf-copier.conf && \
-    cp -v ${RADIODAN_FS}/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf && \
-    cp -v ${RADIODAN_FS}/wpa_supplicant.conf /boot/wpa_supplicant.txt
+    cp -v ${RADIODAN_CONF}/wpa-conf-copier.conf /etc/init/wpa-conf-copier.conf && \
+    cp -v ${RADIODAN_CONF}/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf && \
+    cp -v ${RADIODAN_CONF}/wpa_supplicant.conf /boot/wpa_supplicant.txt
 
 # nginx
   apt-get install -y nginx && \
-    cp -v ${RADIODAN_FS}/wpa_cli_web_redirect /etc/nginx/sites-available/wpa_cli_web_redirect && \
-    cp -v ${RADIODAN_FS}/radiodan_client /etc/nginx/sites-available/radiodan_client && \
-    cp -v ${RADIODAN_FS}/status511.html /opt/radiodan/adhoc/status511.html && \
+    cp -v ${RADIODAN_CONF}/wpa_cli_web_redirect /etc/nginx/sites-available/wpa_cli_web_redirect && \
+    cp -v ${RADIODAN_CONF}/radiodan_client /etc/nginx/sites-available/radiodan_client && \
+    cp -v ${RADIODAN_CONF}/status511.html /opt/radiodan/adhoc/status511.html && \
     chown 755 /opt/radiodan/adhoc/status511.html &&
     rm /etc/nginx/sites-enabled/default
 
@@ -72,9 +72,9 @@
     curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.2.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/ && \
       curl -L https://github.com/radiodan/client_web_example/releases/download/v0.1.0/radiodan-web.tar.gz | tar xz -C /opt/radiodan/ && \
       /opt/node/bin/npm -g install forever && \
-      cp -v ${RADIODAN_FS}/radiodan-config.json /opt/radiodan/server/config.json && \
-      cp -v ${RADIODAN_FS}/radiodan-server /etc/init.d/radiodan-server && \
-      cp -v ${RADIODAN_FS}/radiodan-web /etc/init.d/radiodan-web && \
+      cp -v ${RADIODAN_CONF}/radiodan-config.json /opt/radiodan/server/config.json && \
+      cp -v ${RADIODAN_CONF}/radiodan-server /etc/init.d/radiodan-server && \
+      cp -v ${RADIODAN_CONF}/radiodan-web /etc/init.d/radiodan-web && \
       update-rc.d radiodan-server defaults && \
       update-rc.d radiodan-web defaults
 
