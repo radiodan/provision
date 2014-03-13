@@ -1,0 +1,16 @@
+{
+  "dataPath": "/tmp/.radiodan",
+  "defaults": {
+    "music": "/media/music/"
+  },
+  "radios": [
+    {
+      "name": "Audio",
+      "id": 1
+    },
+    {
+      "name": "Spoken",
+      "id": 2
+    }
+  ]
+}

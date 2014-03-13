@@ -69,8 +69,10 @@
     echo 'PATH="/opt/node/bin:$PATH"' >> /etc/profile
 
 # radiodan apps
-    curl -L https://www.dropbox.com/s/umlovwra498ei0l/radiodan-example.tar.gz | tar xz -C /opt/radiodan/ && \
+    curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.2.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/ && \
+      curl -L https://github.com/radiodan/client_web_example/releases/download/v0.1.0/radiodan-web.tar.gz | tar xz -C /opt/radiodan/ && \
       /opt/node/bin/npm -g install forever && \
+      cp -v ${RADIODAN_FS}/radiodan-config.json /opt/radiodan/server/config.json && \
       cp -v ${RADIODAN_FS}/radiodan-server /etc/init.d/radiodan-server && \
       cp -v ${RADIODAN_FS}/radiodan-web /etc/init.d/radiodan-web && \
       update-rc.d radiodan-server defaults && \
