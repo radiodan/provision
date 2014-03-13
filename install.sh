@@ -93,7 +93,7 @@
 # Install physical UI
   mkdir -p /opt/radiodan/physical-ui/ && \
     curl -L https://github.com/radiodan/physical-ui/releases/download/v0.0.1/physical-ui.tar.gz | tar xz --strip-components 1 -C /opt/radiodan/physical-ui && \
-    cp -v ${RADIODAN_FS}/radiodan-physical-ui /etc/init.d/radiodan-physical-ui && \
+    cp -v ${RADIODAN_CONF}/radiodan-physical-ui /etc/init.d/radiodan-physical-ui && \
     update-rc.d radiodan-physical-ui defaults
 
 # Tidying Up
