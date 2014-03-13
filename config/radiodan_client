@@ -3,6 +3,9 @@ upstream nodejs {
 }
 
 server {
+  error_page 502 /502.html;
+  location = /502.html { root /opt/radiodan/web/static; }
+
   location / {
     proxy_pass  http://nodejs;
 
