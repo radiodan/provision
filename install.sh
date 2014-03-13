@@ -16,6 +16,9 @@
   apt-get install -y alsa-utils mpd mpc vim rabbitmq-server && \
     update-rc.d -f mpd remove
 
+  # add ALSA conf to set usb as default audio device
+  cp -v ${RADIODAN_FS}/alsa-base.conf /etc/modprobe.d/alsa-base.conf
+
 # samba && share music
   apt-get install -y samba avahi-daemon && \
     mkdir /media/music && chmod 777 -R /media/music && \
