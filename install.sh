@@ -12,6 +12,12 @@
     chmod +x /etc/init.d/hostname-change && \
     update-rc.d hostname-change defaults 01 99
 
+# setup funky MOTD
+  cp -rv ${RADIODAN_CONF}/motd.radiodan /etc/ && \
+    echo > /etc/motd && \
+    cp -rv ${RADIODAN_CONF}/motd.service /etc/init.d/motd && \
+    /etc/init.d/motd
+
 # install radiodan essentials, stop mpd from loading on boot
   apt-get install -y alsa-utils mpd mpc vim rabbitmq-server && \
     update-rc.d -f mpd remove
