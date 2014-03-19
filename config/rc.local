@@ -15,9 +15,7 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
-/opt/radiodan/adhoc/try_adhoc_network > /var/log/radiodan/adhoc_log.txt 2>&1
-iwconfig >> /var/log/radiodan/adhoc_log.txt
-
+# /opt/radiodan/adhoc/try_adhoc_network > /var/log/radiodan/adhoc_log.txt 2>&1
 #/usr/local/bin/install_apps > /var/log/radiodan/install_apps_log.txt 2>&1
 #/usr/local/bin/start_apps > /var/log/radiodan/start_apps_log.txt 2>&1
 

@@ -45,6 +45,8 @@
 
   cp -v ${RADIODAN_CONF}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
 
+  cp -v ${RADIODAN_CONF}/wifi-configuration.conf /etc/init/wifi-configuration.conf
+
   apt-get install -y dnsmasq && \
     cp -v ${RADIODAN_CONF}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf &&
     update-rc.d -f dnsmasq remove
