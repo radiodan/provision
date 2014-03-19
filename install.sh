@@ -1,6 +1,7 @@
 ## Radiodan setup steps
 
   RADIODAN_CONF=/home/pi/radiodan-setup/config
+  RADIODAN_USER=pi
 
 # TODO: Add speed hacks inc. tmpfs
   cp -v ${RADIODAN_CONF}/prepare-dirs /etc/init.d/prepare-dirs && \
@@ -40,7 +41,7 @@
 
 # wpa_cli
   apt-get install -y ruby1.9.3 && \
-    gem install --no-ri --no-rdoc wpa_cli_web
+    gem install --no-ri --no-rdoc wpa_cli_web foreman procfile-upstart-exporter
 
   cp -v ${RADIODAN_CONF}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
 
@@ -85,16 +86,16 @@
       curl -L https://github.com/radiodan/client_web_example/releases/download/v0.1.0/radiodan-web.tar.gz | tar xz -C /opt/radiodan/ && \
       /opt/node/bin/npm -g install forever && \
       cp -v ${RADIODAN_CONF}/radiodan-config.json /opt/radiodan/server/config.json && \
-      cp -v ${RADIODAN_CONF}/radiodan-server /etc/init.d/radiodan-server && \
-      cp -v ${RADIODAN_CONF}/radiodan-web /etc/init.d/radiodan-web && \
-      update-rc.d radiodan-server defaults && \
-      update-rc.d radiodan-web defaults
+      cd ${RADIODAN_CONF}/radiodan-server && \
+      procfile-upstart-exporter create --verbose --user ${RADIODAN_USER} --application radiodan-server --path /etc/init && \
+      cd ${RADIODAN_CONF}/radiodan-client && \
+      procfile-upstart-exporter create --verbose --user ${RADIODAN_USER} --application radiodan-web --path /etc/init
 
 # Install physical UI
   mkdir -p /opt/radiodan/physical-ui/ && \
     curl -L https://github.com/radiodan/physical-ui/releases/download/v0.0.1/physical-ui.tar.gz | tar xz --strip-components 1 -C /opt/radiodan/physical-ui && \
-    cp -v ${RADIODAN_CONF}/radiodan-physical-ui /etc/init.d/radiodan-physical-ui && \
-    update-rc.d radiodan-physical-ui defaults
+    cd ${RADIODAN_CONF}/radiodan-physical-ui && \
+    procfile-upstart-exporter create --verbose --user root --application radiodan-physical-ui --path /etc/init
 
 # Tidying Up
 
