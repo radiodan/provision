@@ -24,14 +24,24 @@ createAdHocNetwork(){
 }
 
 showAccessPoint() {
-  /bin/rm /etc/nginx/sites-enabled/radiodan_client
+  oldConfig=/etc/nginx/sites-enabled/radiodan_client
+  if [ -h ${oldConfig} ]
+  then
+    /bin/rm ${oldConfig}
+  fi
+
   /bin/ln -sf /etc/nginx/sites-available/wpa_cli_web_redirect /etc/nginx/sites-enabled/wpa_cli_web_redirect
 
   /usr/sbin/service nginx reload
 }
 
 showRadiodanClient() {
-  /bin/rm /etc/nginx/sites-enabled/wpa_cli_web_redirect
+  oldConfig=/etc/nginx/sites-enabled/wpa_cli_web_redirect
+  if [ -h ${oldConfig} ]
+  then
+    /bin/rm ${oldConfig}
+  fi
+
   /bin/ln -sf /etc/nginx/sites-available/radiodan_client /etc/nginx/sites-enabled/radiodan_client
 
   /usr/sbin/service nginx reload
