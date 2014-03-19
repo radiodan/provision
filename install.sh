@@ -1,7 +1,6 @@
 ## Radiodan setup steps
 
   RADIODAN_CONF=/home/pi/radiodan-setup/config
-  RADIODAN_USER=pi
 
 # TODO: Add speed hacks inc. tmpfs
   cp -v ${RADIODAN_CONF}/prepare-dirs /etc/init.d/prepare-dirs && \
@@ -41,7 +40,7 @@
 
 # wpa_cli
   apt-get install -y ruby1.9.3 && \
-    gem install --no-ri --no-rdoc wpa_cli_web foreman procfile-upstart-exporter
+    gem install --no-ri --no-rdoc wpa_cli_web
 
   cp -v ${RADIODAN_CONF}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
 
@@ -73,7 +72,8 @@
 # nodejs
   mkdir -pv /opt/node && \
     $(curl -L http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz | tar xz --strip-components 1 -C /opt/node) && \
-    echo 'PATH="/opt/node/bin:$PATH"' >> /etc/profile
+    ln -s /opt/node/bin/node /usr/local/bin/node && \
+    ln -s /opt/node/bin/npm /usr/local/bin/npm
 
 # WiringPi library
   rm -rf /tmp/wiringPi && \
@@ -86,16 +86,13 @@
       curl -L https://github.com/radiodan/client_web_example/releases/download/v0.1.0/radiodan-web.tar.gz | tar xz -C /opt/radiodan/ && \
       /opt/node/bin/npm -g install forever && \
       cp -v ${RADIODAN_CONF}/radiodan-config.json /opt/radiodan/server/config.json && \
-      cd ${RADIODAN_CONF}/radiodan-server && \
-      procfile-upstart-exporter create --verbose --user ${RADIODAN_USER} --application radiodan-server --path /etc/init && \
-      cd ${RADIODAN_CONF}/radiodan-client && \
-      procfile-upstart-exporter create --verbose --user ${RADIODAN_USER} --application radiodan-web --path /etc/init
+      cp -v ${RADIODAN_CONF}/radiodan-server.conf /etc/init && \
+      cp -v ${RADIODAN_CONF}/radiodan-web.conf /etc/init
 
 # Install physical UI
   mkdir -p /opt/radiodan/physical-ui/ && \
     curl -L https://github.com/radiodan/physical-ui/releases/download/v0.0.1/physical-ui.tar.gz | tar xz --strip-components 1 -C /opt/radiodan/physical-ui && \
-    cd ${RADIODAN_CONF}/radiodan-physical-ui && \
-    procfile-upstart-exporter create --verbose --user root --application radiodan-physical-ui --path /etc/init
+    cp -v ${RADIODAN_CONF}/radiodan-physical-ui.conf /etc/init
 
 # Tidying Up
 
