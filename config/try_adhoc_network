@@ -1,5 +1,6 @@
 #!/bin/bash
 # RPi Network Conf Bootstrapper
+echo "RPi Network Conf Bootstrapper:"
 echo `date`
 
 createAdHocNetwork(){
