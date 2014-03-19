@@ -1,6 +1,7 @@
 ## Radiodan setup steps
 
   RADIODAN_CONF=/home/pi/radiodan-setup/config
+  RADIODAN_USER=pi
 
 # TODO: Add speed hacks inc. tmpfs
   cp -v ${RADIODAN_CONF}/prepare-dirs /etc/init.d/prepare-dirs && \
@@ -40,7 +41,7 @@
 
 # wpa_cli
   apt-get install -y ruby1.9.3 && \
-    gem install --no-ri --no-rdoc wpa_cli_web
+    gem install --no-ri --no-rdoc wpa_cli_web foreman procfile-upstart-exporter
 
   cp -v ${RADIODAN_CONF}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
 
@@ -88,6 +89,7 @@
       cp -v ${RADIODAN_CONF}/radiodan-config.json /opt/radiodan/server/config.json && \
       cp -v ${RADIODAN_CONF}/radiodan-server.conf /etc/init && \
       cp -v ${RADIODAN_CONF}/radiodan-web.conf /etc/init
+
 
 # Install physical UI
   mkdir -p /opt/radiodan/physical-ui/ && \
