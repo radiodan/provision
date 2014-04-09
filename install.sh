@@ -85,12 +85,13 @@
     ./build
 
 # radiodan apps
-    curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.2.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/ && \
+    curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.3.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/ && \
       curl -L https://github.com/radiodan/client_web_example/releases/download/v0.1.0/radiodan-web.tar.gz | tar xz -C /opt/radiodan/ && \
       /opt/node/bin/npm -g install forever && \
       cp -v ${RADIODAN_CONF}/radiodan-config.json /opt/radiodan/server/config.json && \
       cp -v ${RADIODAN_CONF}/radiodan-server.conf /etc/init && \
-      cp -v ${RADIODAN_CONF}/radiodan-web.conf /etc/init
+      cp -v ${RADIODAN_CONF}/radiodan-magic.conf /etc/init
+      #cp -v ${RADIODAN_CONF}/radiodan-web.conf /etc/init
 
 
 # Install physical UI
