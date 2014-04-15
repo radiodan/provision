@@ -102,3 +102,7 @@
 # Tidying Up
 
   # cat /dev/null > ~/.bash_history && history -c
+
+# Write the creation time for future reference
+  echo "radiodan/provision (`date`)" > /boot/radiodan-provision-info
+  ln -s /boot/radiodan-provision-info /opt/
