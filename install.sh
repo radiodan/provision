@@ -105,4 +105,4 @@
 
 # Write the creation time for future reference
   echo "radiodan/provision (`date`)" > /boot/radiodan-provision-info
-  ln -s /boot/radiodan-provision-info /opt/
+  ln -s /boot/radiodan-provision-info /opt/radiodan/
