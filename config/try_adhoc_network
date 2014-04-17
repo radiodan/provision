@@ -50,7 +50,7 @@ showRadiodanClient() {
 
 
 # Exit early if no wifi dongle
-wifiInterface=$(/sbin/ifconfig | grep -F wlan0)
+wifiInterface=$(/sbin/ifconfig | /bin/grep -F wlan0)
 if [ -z "$wifiInterface" ]
 then
   echo "No wifi adapter connected, exiting"
@@ -60,7 +60,7 @@ else
   echo "Wifi adapter connected"
 fi
 
-connected=$(/sbin/wpa_cli status | grep COMPLETED)
+connected=$(/sbin/wpa_cli status | /bin/grep COMPLETED)
 if [ -z "$connected" ]
 then
   createAdHocNetwork
