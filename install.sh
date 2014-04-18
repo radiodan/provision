@@ -99,6 +99,9 @@
     curl -L https://github.com/radiodan/physical-ui/releases/download/v0.0.1/radiodan-buttons.tar.gz | tar xz --strip-components 1 -C /opt/radiodan/buttons && \
     cp -v ${RADIODAN_CONF}/radiodan-buttons.conf /etc/init
 
+# Permissions
+  chown -R pi:pi /opt/radiodan/
+
 # Tidying Up
 
   # cat /dev/null > ~/.bash_history && history -c
