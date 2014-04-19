@@ -80,9 +80,10 @@
 
 # WiringPi library
   rm -rf /tmp/wiringPi && \
-  git clone git://git.drogon.net/wiringPi /tmp/wiringPi && \
-    cd /tmp/wiringPi && \
-    ./build
+  mkdir -p /tmp/wiringPi && \
+  curl "https://git.drogon.net/?p=wiringPi;a=snapshot;h=master;sf=tgz" | tar xz --strip-components 1 -C /tmp/wiringPi && \
+  cd /tmp/wiringPi && \
+  ./build
 
 # radiodan apps
     curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.3.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/ && \
