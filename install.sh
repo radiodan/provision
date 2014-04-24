@@ -68,6 +68,14 @@
     cp -v ${RADIODAN_CONF}/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf && \
     cp -v ${RADIODAN_CONF}/wpa_supplicant.conf /boot/wpa_supplicant.txt
 
+# WiringPi library
+  rm -rfv /tmp/wiringPi && \
+    mkdir -pv /tmp/wiringPi && \
+    curl "https://git.drogon.net/?p=wiringPi;a=snapshot;h=master;sf=tgz" | tar xz --strip-components 1 -C /tmp/wiringPi && \
+    cd /tmp/wiringPi && \
+    ./build && \
+    rm -rfv /tmp/wiringPi
+
 # nginx
   apt-get install -y nginx && \
     cp -v ${RADIODAN_CONF}/wpa_cli_web_redirect /etc/nginx/sites-available/wpa_cli_web_redirect && \
