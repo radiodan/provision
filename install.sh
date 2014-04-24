@@ -82,20 +82,13 @@
     cp -v ${RADIODAN_CONF}/radiodan_client /etc/nginx/sites-available/radiodan_client && \
     cp -v ${RADIODAN_CONF}/status511.html /opt/radiodan/adhoc/status511.html && \
     chown 755 /opt/radiodan/adhoc/status511.html &&
-    rm /etc/nginx/sites-enabled/default
+    rm -v /etc/nginx/sites-enabled/default
 
 # nodejs
   mkdir -pv /opt/node && \
     $(curl -L http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz | tar xz --strip-components 1 -C /opt/node) && \
-    ln -s /opt/node/bin/node /usr/local/bin/node && \
-    ln -s /opt/node/bin/npm /usr/local/bin/npm
-
-# WiringPi library
-  rm -rf /tmp/wiringPi && \
-  mkdir -p /tmp/wiringPi && \
-  curl "https://git.drogon.net/?p=wiringPi;a=snapshot;h=master;sf=tgz" | tar xz --strip-components 1 -C /tmp/wiringPi && \
-  cd /tmp/wiringPi && \
-  ./build
+    ln -sf /opt/node/bin/node /usr/local/bin/node && \
+    ln -sf /opt/node/bin/npm /usr/local/bin/npm
 
 # radiodan apps
     curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.3.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/ && \
@@ -108,7 +101,7 @@
 
 
 # Install physical UI
-  mkdir -p /opt/radiodan/buttons/ && \
+  mkdir -pv /opt/radiodan/buttons/ && \
     curl -L https://github.com/radiodan/physical-ui/releases/download/v0.0.1/radiodan-buttons.tar.gz | tar xz --strip-components 1 -C /opt/radiodan/buttons && \
     cp -v ${RADIODAN_CONF}/radiodan-buttons.conf /etc/init
 
