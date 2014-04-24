@@ -9,6 +9,11 @@
 # create .ssh dir to place authorised_keys later
   mkdir -pv /home/pi/.ssh
 
+# remove default rubbish from /home/pi
+  rm -rfv /home/pi/python_games && \
+    rm -rfv /home/pi/Desktop && \
+    rm -rfv /home/pi/ocr_pi.png
+
 # clean up distro
   apt-get update
 
