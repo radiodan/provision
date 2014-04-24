@@ -20,7 +20,8 @@
     /etc/init.d/motd
 
 # add jessie source for updated ALSA
-  echo "deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi" > /etc/apt/sources.list.d/jessie.list
+  echo "deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi" > /etc/apt/sources.list.d/jessie.list && \
+    apt-get update
 
 # install radiodan essentials, stop mpd from loading on boot
   apt-get install -y alsa-utils/jessie mpd mpc vim rabbitmq-server && \
