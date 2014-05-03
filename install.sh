@@ -44,7 +44,7 @@
     service avahi-daemon restart
 
 # wpa_cli
-  apt-get install -y ruby1.9.3 && \
+  apt-get install -y ruby1.9.3 ruby-dev && \
     gem install --no-ri --no-rdoc wpa_cli_web foreman procfile-upstart-exporter
 
   cp -v ${RADIODAN_CONF}/wpa-cli-web.conf /etc/init/wpa-cli-web.conf
