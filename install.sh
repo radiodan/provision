@@ -52,9 +52,9 @@
   cp -v ${RADIODAN_CONF}/wifi-configuration.conf /etc/init/wifi-configuration.conf
 
   apt-get install -y dnsmasq && \
-    cp -v ${RADIODAN_CONF}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf &&
-    update-rc.d -f dnsmasq remove
-
+    update-rc.d -f dnsmasq remove && \
+    cp -v ${RADIODAN_CONF}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf
+    
   apt-get install -y hostapd wpasupplicant && \
     update-rc.d -f hostapd remove && \
     cp -v ${RADIODAN_CONF}/hostapd.conf /etc/hostapd/hostapd.conf && \
@@ -80,7 +80,7 @@
     cp -v ${RADIODAN_CONF}/wpa_cli_web_redirect /etc/nginx/sites-available/wpa_cli_web_redirect && \
     cp -v ${RADIODAN_CONF}/radiodan_client /etc/nginx/sites-available/radiodan_client && \
     cp -v ${RADIODAN_CONF}/status511.html /opt/radiodan/adhoc/status511.html && \
-    chown 755 /opt/radiodan/adhoc/status511.html &&
+    chown 755 /opt/radiodan/adhoc/status511.html && \
     rm -v /etc/nginx/sites-enabled/default
 
 # nodejs
