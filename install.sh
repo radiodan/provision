@@ -51,7 +51,7 @@
 
   cp -v ${RADIODAN_CONF}/wifi-configuration.conf /etc/init/wifi-configuration.conf
 
-  apt-get install -y dnsmasq && \
+  apt-get install -y --force-yes dnsmasq && \
     update-rc.d -f dnsmasq remove && \
     cp -v ${RADIODAN_CONF}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf
     
@@ -76,7 +76,7 @@
     ./build
 
 # nginx
-  apt-get install -y nginx && \
+  apt-get install -y --force-yes nginx && \
     cp -v ${RADIODAN_CONF}/wpa_cli_web_redirect /etc/nginx/sites-available/wpa_cli_web_redirect && \
     cp -v ${RADIODAN_CONF}/radiodan_client /etc/nginx/sites-available/radiodan_client && \
     cp -v ${RADIODAN_CONF}/status511.html /opt/radiodan/adhoc/status511.html && \
