@@ -15,3 +15,14 @@ These instructions assume you're starting from a blank disk image of Raspbian.
 6. `sudo sh prepare.sh`
 7. `sudo reboot`
 8. `sudo sh install.sh`
+
+Quick way
+-----
+
+1. Log into the Raspberry Pi
+2. `sudo raspi-config` to Expand filesystem and Overclok (900MHz), Restart
+3. Log in again
+4. curl -L http://git.io/lhbivA | sudo sh
+5. `sudo reboot`
+6. `cd radiodan-setup`
+7. `sudo sh install.sh`
