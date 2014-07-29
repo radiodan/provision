@@ -1,0 +1,158 @@
+#!/usr/bin/env ruby
+
+require "open3"
+require "logger"
+require "tempfile"
+
+LOG_LEVEL = ENV.has_key?("LOG_LEVEL") ? ENV["LOG_LEVEL"].upcase : "INFO"
+ROOT = File.dirname(__FILE__)
+
+Console = Logger.new(STDOUT)
+Console.level = Logger.const_get(LOG_LEVEL)
+Console.formatter = proc do |level, datetime, progname, msg|
+  msg.chomp + "\n"
+end
+
+module CommandLineHelper
+  def self.help
+    <<-EOF
+Provision a radiodan application device.
+#{__FILE__} [steps]
+Valid Steps: #{Steps.valid_steps.join(", ")}.
+    EOF
+  end
+
+  def self.invalid
+    <<-EOF
+Supplied steps are invalid.
+    EOF
+  end
+end
+
+module Steps
+  def self.valid?(steps)
+    sorted_steps = steps.sort
+    (valid_steps & sorted_steps) == sorted_steps
+  end
+
+  def self.execute(steps)
+    @install_steps = []
+    @config_steps  = []
+    @failed_steps  = []
+
+    if steps.include?("all")
+      enqueue_all
+    else
+      steps.each{|s| enqueue(s)}
+    end
+
+    execute!
+
+    Console.info "#{@install_steps.length} steps selected, " +
+        "#{@failed_steps.length} failed."
+
+    unless @failed_steps.empty?
+      Console.error "Failed steps: #{@failed_steps.join(", ")}"
+    end
+  end
+
+  def self.valid_steps
+    @valid_steps ||= (["all"] +
+      Dir.entries(ROOT+"/steps").reject{|x| x[0] == "." || x[0] == "_" }).sort
+  end
+
+  def self.enqueue_all
+    enqueue("_pre-install")
+    valid_steps[1..-1].each{|s| enqueue(s)}
+    enqueue("_post-install")
+  end
+
+  def self.enqueue(step_name)
+    @install_steps << step_name
+    @config_steps  << step_name
+  end
+
+  def self.execute!
+    @install_steps.each_with_index do |step, index|
+      script = parse_script(step, "install")
+
+      unless script
+        Console.warn "No install step for #{step}"
+        next
+      end
+
+      Console.info "Installing #{step} (#{index+1}/#{@install_steps.count})"
+      Open3.popen2e("/bin/sh", script) do |stdin, response, status|
+        until (s = response.gets).nil? do
+          Console.debug "#{step}: #{s}"
+        end
+
+        unless status.value.success?
+          @failed_steps << step
+          Console.error "Failed #{step} install."
+        end
+      end
+    end
+
+    @config_steps.each_with_index do |step, index|
+      if @failed_steps.include?(step)
+        Console.debug "Skipped #{step} config, due to presence in failed steps"
+        next
+      end
+
+      script = parse_script(step, "configure")
+
+      unless script
+        Console.debug "No config step for #{step}"
+        next
+      end
+
+      Console.info "Configuring #{step} (#{index+1}/#{@config_steps.count})"
+      Open3.popen2e("/bin/sh", script) do |stdin, response, status|
+        until (s = response.gets).nil? do
+          Console.debug "#{step}: #{s}"
+        end
+
+        unless status.value.success?
+          @failed_steps << step
+          Console.error "Failed #{step} configure."
+        end
+      end
+    end
+  end
+
+  def self.parse_script(step, script_name)
+    dir = File.join(ROOT, "steps", step)
+    conf_dir = File.join(dir, "files")
+    file = File.join(dir, "#{script_name}.sh")
+
+    if File.exist?(file)
+      src = File.read(file)
+      parsed = src.gsub "${RADIODAN_CONF}", conf_dir
+
+      tmp = Tempfile.new("#{script_name}_#{step}")
+      tmp.write parsed
+      tmp.close
+
+      tmp.path
+    else
+      false
+    end
+  end
+end
+
+if %x{whoami}.chomp != "root"
+  abort "Must be root to execute commands"
+end
+
+if ARGV.length == 0
+  Console.fatal CommandLineHelper.help
+  abort
+end
+
+if Steps.valid?(ARGV)
+  Steps.execute(ARGV)
+else
+  Console.fatal CommandLineHelper.invalid
+  abort
+end
