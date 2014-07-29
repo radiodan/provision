@@ -19,12 +19,13 @@
     cp -rv ${RADIODAN_CONF}/motd.service /etc/init.d/motd && \
     /etc/init.d/motd
 
-# add jessie source for updated ALSA
-  echo "deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi" > /etc/apt/sources.list.d/jessie.list && \
+# use jessie source for updated ALSA, amongst others
+  cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
+    sed -i -e 's/ \(stable\|wheezy\)/ testing/ig' /etc/apt/sources.list && \
     apt-get update
 
 # install radiodan essentials, stop mpd from loading on boot
-  apt-get install -y alsa-utils/jessie mpd mpc vim rabbitmq-server && \
+  apt-get install -y alsa-utils mpd mpc vim rabbitmq-server && \
     update-rc.d -f mpd remove
 
   # add ALSA conf to set usb as default audio device
@@ -54,7 +55,7 @@
   apt-get install -y --force-yes dnsmasq && \
     update-rc.d -f dnsmasq remove && \
     cp -v ${RADIODAN_CONF}/dnsmasq.conf /etc/dnsmasq.d/dnsmasq.conf
-    
+
   apt-get install -y hostapd wpasupplicant && \
     update-rc.d -f hostapd remove && \
     cp -v ${RADIODAN_CONF}/hostapd.conf /etc/hostapd/hostapd.conf && \
