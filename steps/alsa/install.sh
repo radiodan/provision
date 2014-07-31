@@ -1,1 +1,1 @@
-apt-get install -y alsa-utils
+ DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes alsa-utils
