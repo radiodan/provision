@@ -1,0 +1,18 @@
+#!/bin/sh
+
+export PATH=$PATH:/usr/local/bin
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+export LOG_LEVEL=debug
+export BBC_SERVICES_URL=http://bbc-services-api.herokuapp.com
+
+case "$1" in
+  start)
+  exec forever --sourceDir=/opt/radiodan/magic  -o /var/log/radiodan/magic.access.log -e /var/log/radiodan/magic.error.log -p /var/run/radiodan start main.js
+  ;;
+
+  stop)
+  exec forever stop --sourceDir=/opt/radiodan/magic main.js
+  ;;
+esac
+
+exit 0

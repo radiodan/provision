@@ -17,7 +17,8 @@ ROOTPATH=/var/log
 #
 case "${1:-''}" in
   start)
-    # create the /var/log/nginx needed by webserver
+    mkdir /var/run/radiodan
+    # create the /var/log/DIR
     for DIR in mpd samba nginx radiodan
     do
       if [ ! -d ${ROOTPATH}/${DIR} ]; then
