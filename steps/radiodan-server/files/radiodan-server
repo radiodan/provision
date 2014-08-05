@@ -7,7 +7,7 @@ export BBC_SERVICES_URL=http://bbc-services-api.herokuapp.com
 
 case "$1" in
   start)
-  exec forever --sourceDir=/opt/radiodan/server  -o /var/log/radiodan/server.access.log -e /var/log/radiodan/server.error.log -p /var/run/radiodan ./bin/server /opt/radiodan/magic/config/radiodan-config.json
+  exec forever start --pidFile=/var/run/radiodan/radiodan-server.pid --sourceDir=/opt/radiodan/server -o /var/log/radiodan/server.access.log -e /var/log/radiodan/server.error.log ./bin/server /opt/radiodan/magic/config/radiodan-config.json
   ;;
 
   stop)
