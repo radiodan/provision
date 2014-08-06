@@ -11,6 +11,7 @@ createAdHocNetwork(){
   # Do 6 scans over 1 min
   for i in {1..6}
   do
+    echo "Scan $i of 6"
     /sbin/wpa_cli scan
     /bin/sleep 10
   done
@@ -64,12 +65,16 @@ connected=$(/sbin/wpa_cli status | /bin/grep COMPLETED)
 if [ -z "$connected" ]
 then
   createAdHocNetwork
-  /sbin/start wpa-cli-web
+
+  echo "Starting wpa-cli-web"
+  /etc/init.d/wpa-cli-web start
+
+  echo "Starting DNSMasq"
   /usr/sbin/service dnsmasq start
+
+  echo "Symlink Access Point"
   showAccessPoint
 else
   showRadiodanClient
 fi
 
-
-#exit 0
