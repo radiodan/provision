@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+### BEGIN INIT INFO
+# Provides:          wpa-conf-copier
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Required-Start:
+# Required-Stop:
+# Short-Description: Copy WPA config on boot
+# Description:       Copy WPA config on boot
+### END INIT INFO
+
+SOURCE_CONF="/boot/wpa_supplicant.txt"
+TARGET_CONF="/etc/wpa_supplicant/wpa_supplicant.conf"
+
+
+#
+# main()
+#
+case "${1:-''}" in
+  start)
+  if [ "$SOURCE_CONF" -nt "$TARGET_CONF" ]; then
+    echo "$SOURCE_CONF newer than $TARGET_CONF - copied"
+    /bin/cp -u $SOURCE_CONF $TARGET_CONF
+  else
+    echo "$SOURCE_CONF older than $TARGET_CONF - not copied"
+  fi
+  exit 0
+    ;;
+  stop)
+    ;;
+  restart)
+   ;;
+  reload|force-reload)
+   ;;
+  status)
+   ;;
+  *)
+   echo "Usage: $SELF start"
+   exit 1
+   ;;
+esac
