@@ -1,2 +1,2 @@
-mkdir -pv /opt/radiodan && \
-  curl -L https://github.com/radiodan/magic-button/releases/download/v0.1.0/radiodan-magic.tar.gz | tar xz -C /opt/radiodan/
+mkdir -pv /opt/radiodan/magic && \
+  curl -L http://vm-1027-user.virt.ch.bbc.co.uk/releases/radiodan/magic-button/master | tar xz -C /opt/radiodan/magic

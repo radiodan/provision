@@ -1,2 +1,2 @@
-mkdir -pv /opt/radiodan && \
-  curl -L https://github.com/radiodan/radiodan.js/releases/download/v0.3.0/radiodan-server.tar.gz | tar xz -C /opt/radiodan/
+mkdir -pv /opt/radiodan/server && \
+  curl -L http://vm-1027-user.virt.ch.bbc.co.uk/releases/radiodan/radiodan.js/master | tar xz -C /opt/radiodan/server
