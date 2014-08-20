@@ -1,0 +1,17 @@
+#!/bin/sh
+
+export PATH=$PATH:/usr/local/bin
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+export LOG_LEVEL=debug
+
+case "$1" in
+  start)
+  exec forever start --pidFile=/var/run/radiodan/radiodan-example.pid --sourceDir=/opt/radiodan/example  -o /var/log/radiodan/example.access.log -e /var/log/radiodan/example.error.log main.js
+  ;;
+
+  stop)
+  exec forever stop --sourceDir=/opt/radiodan/example main.js
+  ;;
+esac
+
+exit 0
