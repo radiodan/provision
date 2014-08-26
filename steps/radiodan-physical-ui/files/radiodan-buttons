@@ -1,0 +1,15 @@
+#!/bin/sh
+
+export PATH=$PATH:/usr/local/bin
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+export LOG_LEVEL=debug
+
+case "$1" in
+  start)
+  exec forever start --pidFile=/var/run/radiodan/radiodan-buttons.pid --sourceDir=/opt/radiodan/buttons  -o /var/log/radiodan/buttons.access.log -e /var/log/radiodan/buttons.error.log ./bin/server /opt/radiodan/magic/config/physical-ui-config.json
+  ;;
+
+  stop)
+  exec forever stop --sourceDir=/opt/radiodan/buttons ./bin/server /opt/radiodan/magic/config/physical-ui-config.json
+  ;;
+esac
