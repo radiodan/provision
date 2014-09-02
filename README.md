@@ -13,3 +13,7 @@ These instructions assume you're starting from a blank disk image of Raspbian.
 5. `cd provision`
 6. `sudo ./provision all`
 
+You can view all the possible steps by running `./provision`.
+Setting a `LOG_LEVEL` environment variable to `debug` will show you the output
+of the provisioning commands.
+
