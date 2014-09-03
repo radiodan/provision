@@ -1,18 +1,44 @@
 #!/bin/sh
 
+# Quick start-stop-daemon example, derived from Debian /etc/init.d/ssh
+set -e
+
 export PATH=$PATH:/usr/local/bin
 export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
 export LOG_LEVEL=debug
 export BBC_SERVICES_URL=http://bbc-services-api.herokuapp.com
 
+# Must be a valid filename
+NAME=radiodan-server
+PIDFILE=/var/run/radiodan/$NAME.pid
+#This is the command to be run, give the full pathname
+DAEMON=/opt/radiodan/server/bin/server
+DAEMON_OPTS="/opt/radiodan/magic/config/radiodan-config.json"
+
+export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
+
 case "$1" in
   start)
-  exec forever start --pidFile=/var/run/radiodan/radiodan-server.pid --sourceDir=/opt/radiodan/server -o /var/log/radiodan/server.access.log -e /var/log/radiodan/server.error.log ./bin/server /opt/radiodan/magic/config/radiodan-config.json
-  ;;
-
+        echo -n "Starting daemon: "$NAME
+	start-stop-daemon --start --quiet --background --no-close --make-pidfile --pidfile $PIDFILE --exec $DAEMON -- $DAEMON_OPTS > /var/log/$NAME.log 2>&1
+        echo "."
+	;;
   stop)
-  exec forever stop --sourceDir=/opt/radiodan/magic ./bin/server
-  ;;
+        echo -n "Stopping daemon: "$NAME
+	start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+        rm $PIDFILE
+        echo "."
+	;;
+  restart)
+        echo -n "Restarting daemon: "$NAME
+	start-stop-daemon --stop --quiet --oknodo --retry 30 --pidfile $PIDFILE
+	start-stop-daemon --start --quiet --background --pidfile $PIDFILE --exec $DAEMON -- $DAEMON_OPTS
+	echo "."
+	;;
+
+  *)
+	echo "Usage: "$1" {start|stop|restart}"
+	exit 1
 esac
 
 exit 0
