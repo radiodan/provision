@@ -1,0 +1,8 @@
+# Check every 10 seconds
+set daemon 10
+
+# Allow HTTP UI
+# Also used by command-line client
+set httpd
+  port 2812
+  allow pi:raspberry
