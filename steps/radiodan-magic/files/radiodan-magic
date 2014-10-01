@@ -21,7 +21,7 @@ NAME=radiodan-magic
 PIDFILE=/var/run/radiodan/$NAME.pid
 #This is the command to be run, give the full pathname
 DAEMON=/usr/local/bin/node
-DAEMON_OPTS="/opt/radiodan/magic/main.js"
+DAEMON_OPTS="/opt/radiodan/apps/magic/current/main.js"
 
 export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 

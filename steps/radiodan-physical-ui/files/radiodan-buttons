@@ -20,8 +20,8 @@ export BBC_SERVICES_URL=http://bbc-services-api.herokuapp.com
 NAME=radiodan-buttons
 PIDFILE=/var/run/radiodan/$NAME.pid
 #This is the command to be run, give the full pathname
-DAEMON=/opt/radiodan/buttons/bin/server
-DAEMON_OPTS="/opt/radiodan/magic/config/physical-ui-config.json"
+DAEMON=/opt/radiodan/apps/buttons/current/bin/server
+DAEMON_OPTS="/opt/radiodan/apps/magic/current/config/physical-ui-config.json"
 
 export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 
