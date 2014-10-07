@@ -2,9 +2,7 @@
 check process radiodan-server with pidfile /var/run/radiodan/radiodan-server.pid
   start program = "/usr/sbin/service radiodan-server start"
   stop program = "/usr/sbin/service radiodan-server stop"
-  if 2 restarts within 5 cycles then stop
 
 check process radiodan-example with pidfile /var/run/radiodan/radiodan-example.pid
   start program = "/usr/sbin/service radiodan-example start"
   stop program = "/usr/sbin/service radiodan-example stop"
-  if 2 restarts within 5 cycles then stop

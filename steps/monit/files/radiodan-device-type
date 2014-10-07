@@ -4,8 +4,8 @@ require 'fileutils'
 
 available_path  = "/etc/monit/monitrc.d/"
 enabled_path    = "/etc/monit/conf.d/"
-available_paths = Dir[available_path + 'radiodan-*']
-enabled_paths   = Dir[enabled_path + 'radiodan-*']
+available_paths = Dir[available_path + 'radiodan-type-*']
+enabled_paths   = Dir[enabled_path + 'radiodan-type-*']
 available_types = available_paths.map { |f| File.basename(f) }
 
 puts "Current device type: #{enabled_paths.map {|p| File.basename(p) }.join(',')}"

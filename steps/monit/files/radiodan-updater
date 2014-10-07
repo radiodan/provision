@@ -1,0 +1,2 @@
+check file updater_status with path /opt/radiodan/updates/status.json
+  if timestamp > 1 minute then exec "/usr/local/bin/updater check --target=/opt/radiodan/apps --workspace=/opt/radiodan/updates"

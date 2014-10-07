@@ -21,7 +21,7 @@ NAME=radiodan-example
 PIDFILE=/var/run/radiodan/$NAME.pid
 #This is the command to be run, give the full pathname
 DAEMON=/usr/local/bin/node
-DAEMON_OPTS="/opt/radiodan/example/main.js"
+DAEMON_OPTS="/opt/radiodan/apps/example/current/main.js"
 
 export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 

@@ -1,24 +1,12 @@
-# Check every 10 seconds
-set daemon 10
-
-# Allow HTTP UI
-# Also used by command-line client
-set httpd
-  port 2812
-  allow pi:raspberry
-
 # Radiodan services
 check process radiodan-server with pidfile /var/run/radiodan/radiodan-server.pid
   start program = "/usr/sbin/service radiodan-server start"
   stop program = "/usr/sbin/service radiodan-server stop"
-  if 2 restarts within 5 cycles then stop
 
 check process radiodan-magic with pidfile /var/run/radiodan/radiodan-magic.pid
   start program = "/usr/sbin/service radiodan-magic start"
   stop program = "/usr/sbin/service radiodan-magic stop"
-  if 2 restarts within 5 cycles then stop
 
 check process radiodan-buttons with pidfile /var/run/radiodan/radiodan-buttons.pid
   start program = "/usr/sbin/service radiodan-buttons start"
   stop program = "/usr/sbin/service radiodan-buttons stop"
-  if 2 restarts within 5 cycles then stop
