@@ -15,7 +15,7 @@ set -e
 NAME=radiodan-cease
 PIDFILE=/var/run/radiodan/$NAME.pid
 #This is the command to be run, give the full pathname
-DAEMON=/opt/radiodan/apps/cease/current/bin/cease
+DAEMON=/opt/radiodan/apps/cease/current/cease
 
 export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 
