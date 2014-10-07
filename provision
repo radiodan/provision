@@ -127,7 +127,8 @@ module Steps
     file = File.join(dir, "#{script_name}.sh")
 
     if File.exist?(file)
-      src = File.read(file)
+      # Add set -e so script fails on first error
+      src = "set -e \n" + File.read(file)
       parsed = src.gsub "${RADIODAN_CONF}", conf_dir
 
       tmp = Tempfile.new("#{script_name}_#{step}")
