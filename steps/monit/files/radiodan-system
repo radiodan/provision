@@ -1,0 +1,6 @@
+check file updater_status with path /opt/radiodan/updates/status.json
+  if timestamp > 1 minute then exec "/usr/local/bin/updater check --target=/opt/radiodan/apps --workspace=/opt/radiodan/updates"
+
+check process radiodan-cease with pidfile /var/run/radiodan/radiodan-cease.pid
+  start program = "/usr/sbin/service radiodan-cease start"
+  stop program = "/usr/sbin/service radiodan-cease stop"
