@@ -1,8 +1,10 @@
 # Radiodan services
 check process radiodan-server with pidfile /var/run/radiodan/radiodan-server.pid
+  group radiodan
   start program = "/usr/sbin/service radiodan-server start"
   stop program = "/usr/sbin/service radiodan-server stop"
 
 check process radiodan-example with pidfile /var/run/radiodan/radiodan-example.pid
+  group radiodan
   start program = "/usr/sbin/service radiodan-example start"
   stop program = "/usr/sbin/service radiodan-example stop"
