@@ -1,1 +1,1 @@
-apt-get install -y vim htop
+apt-get install -y vim htop build-essential
