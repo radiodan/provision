@@ -1,5 +1,5 @@
 upstream debug {
-  server 127.0.0.1:8080 max_fails=0;
+  server 127.0.0.1:8090 max_fails=0;
 }
 
 upstream nodejs {
