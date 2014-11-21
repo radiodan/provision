@@ -131,7 +131,7 @@ module Steps
       src = "set -e \n" + File.read(file)
       parsed = src.gsub "${RADIODAN_CONF}", conf_dir
 
-      tmp = Tempfile.new("#{script_name}_#{step}")
+      tmp = Tempfile.new("provision_script_#{script_name}_#{step}")
       tmp.write parsed
       tmp.close
 
