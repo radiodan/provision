@@ -7,12 +7,18 @@ upstream nodejs {
 }
 
 server {
-  error_page 502 /502.html;
-  location = /502.html { root /opt/radiodan/web/static; }
+  root /opt/radiodan/static/;
+
+  error_page 403 404 405 500 501 502 503 504 /radiodan404.html;
+
+  location /radiodan404.html {
+    internal;
+  }
 
   location /debug {
     proxy_pass  http://debug;
 
+    proxy_intercept_errors on;
     proxy_redirect off;
     proxy_http_version 1.1;
     proxy_buffering off;
@@ -30,6 +36,7 @@ server {
   location / {
     proxy_pass  http://nodejs;
 
+    proxy_intercept_errors on;
     proxy_redirect off;
     proxy_http_version 1.1;
     proxy_buffering off;

@@ -4,11 +4,17 @@ upstream debug {
 
 server {
   listen 80;
-  root /opt/radiodan/adhoc/;
+  root /opt/radiodan/static/;
+
+  error_page 404 /radiodan404.html;
+  location /radiodan404.html {
+    internal;
+  }
 
   location /debug {
     proxy_pass  http://debug;
 
+    proxy_intercept_errors on;
     proxy_redirect off;
     proxy_http_version 1.1;
     proxy_buffering off;
