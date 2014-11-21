@@ -20,7 +20,7 @@
   apt-get update
 
 # remove unneeded stuff
-  apt-get purge -y lxde midori scratch && \
+  apt-get purge -y lxde midori scratch weston && \
     apt-get autoremove -y
 
 # upgrade remaining packages
