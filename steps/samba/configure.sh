@@ -4,6 +4,6 @@ mkdir -pv /opt/radiodan && chown 755 -R /opt/radiodan
 cp -v ${RADIODAN_CONF}/smb.conf /etc/samba/smb.conf
 service samba restart
 
-echo -ne "pi\npi\n" | smbpasswd -a -s pi
+/usr/bin/yes pi | smbpasswd -a -s pi
 service samba restart
 
