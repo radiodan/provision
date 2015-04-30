@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+available_path  = "/etc/supervisor/available/"
+enabled_path    = "/etc/supervisor/conf.d/"
+available_paths = Dir[available_path + 'radiodan-type-*']
+enabled_paths   = Dir[enabled_path + 'radiodan-type-*']
+available_types = available_paths.map { |f| File.basename(f) }
+
+puts "Current device type: #{enabled_paths.map {|p| File.basename(p) }.join(',')}"
+
+if %x{whoami}.chomp != "root"
+  abort "Must be root to execute commands"
+end
+
+if ARGV.length == 0 || !available_types.include?(ARGV[0])
+  abort "Device type required. Valid types #{available_types.join(", ")}"
+else
+  selected_config = available_path + ARGV[0]
+  selected_dest   = enabled_path + ARGV[0]
+end
+
+enabled_paths.each do |path|
+  FileUtils.rm(path, :verbose => true)
+end
+
+FileUtils.ln_s(selected_config, selected_dest, :verbose => true)
+
+puts "Done. Now restart"
