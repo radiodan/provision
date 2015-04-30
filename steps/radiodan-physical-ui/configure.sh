@@ -1,1 +1,0 @@
-cp -v ${RADIODAN_CONF}/radiodan-buttons /etc/init.d
