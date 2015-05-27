@@ -108,7 +108,7 @@ module Steps
       end
 
       Console.info "Configuring #{step} (#{index+1}/#{@config_steps.count})"
-      Open3.popen2e("/bin/sh", script) do |stdin, response, status|
+      Open3.popen2e({DEBIAN_FRONTEND: 'noninteractive'}, "/bin/sh", script) do |stdin, response, status|
         until (s = response.gets).nil? do
           Console.debug "#{step}: #{s}"
         end
