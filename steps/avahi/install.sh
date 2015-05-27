@@ -1,1 +1,1 @@
-apt-get install -y avahi-daemon
+apt-get install -y --force-yes avahi-daemon

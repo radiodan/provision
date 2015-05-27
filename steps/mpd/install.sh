@@ -1,1 +1,1 @@
-apt-get install -y mpd mpc
+apt-get install -y --force-yes mpd mpc

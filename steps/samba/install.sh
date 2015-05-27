@@ -1,1 +1,1 @@
-apt-get install -y samba
+apt-get install -y --force-yes samba
