@@ -15,3 +15,11 @@ autostart=true
 autorestart=true
 redirect_stderr=true
 stdout_logfile_backups=1
+#
+# Radiodan broker
+[program:radiodan-broker]
+command=/opt/radiodan/apps/broker/current/broker
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile_backups=1
