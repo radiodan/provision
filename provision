@@ -13,7 +13,7 @@ Console.formatter = proc do |level, datetime, progname, msg|
   msg.chomp + "\n"
 end
 
-SCRIPT_ENV = {DEBIAN_FRONTEND: 'noninteractive'}.merge(ENV)
+SCRIPT_ENV = {'DEBIAN_FRONTEND' => 'noninteractive'}.merge(ENV)
 
 module CommandLineHelper
   def self.help
