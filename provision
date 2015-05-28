@@ -13,6 +13,8 @@ Console.formatter = proc do |level, datetime, progname, msg|
   msg.chomp + "\n"
 end
 
+SCRIPT_ENV = {DEBIAN_FRONTEND: 'noninteractive'}.merge(ENV)
+
 module CommandLineHelper
   def self.help
     <<-EOF
@@ -82,7 +84,7 @@ module Steps
       end
 
       Console.info "Installing #{step} (#{index+1}/#{@install_steps.count})"
-      Open3.popen2e("/bin/sh", script) do |stdin, response, status|
+      Open3.popen2e(SCRIPT_ENV, "/bin/sh", script) do |stdin, response, status|
         until (s = response.gets).nil? do
           Console.debug "#{step}: #{s}"
         end
@@ -108,7 +110,7 @@ module Steps
       end
 
       Console.info "Configuring #{step} (#{index+1}/#{@config_steps.count})"
-      Open3.popen2e({DEBIAN_FRONTEND: 'noninteractive'}, "/bin/sh", script) do |stdin, response, status|
+      Open3.popen2e(SCRIPT_ENV, "/bin/sh", script) do |stdin, response, status|
         until (s = response.gets).nil? do
           Console.debug "#{step}: #{s}"
         end
