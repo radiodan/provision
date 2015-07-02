@@ -4,7 +4,7 @@ require "open3"
 require "logger"
 require "tempfile"
 
-LOG_LEVEL = ENV.has_key?("LOG_LEVEL") ? ENV["LOG_LEVEL"].upcase : "INFO"
+LOG_LEVEL = ENV.has_key?("LOG_LEVEL") ? ENV["LOG_LEVEL"].upcase : "DEBUG"
 ROOT = File.dirname(__FILE__)
 
 Console = Logger.new(STDOUT)
