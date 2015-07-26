@@ -16,15 +16,23 @@ createAdHocNetwork(){
     /bin/sleep 10
   done
 
-  echo "Setting up hostapd access point..."
-  sudo /usr/sbin/hostapd -B /etc/hostapd/hostapd.conf
-  /bin/sleep 2
+  connected=$(/sbin/wpa_cli status | /bin/grep COMPLETED)
+  echo "Final check for wifi connection"
+  if [ -z "$connected" ]
+  then
+    echo "Setting up hostapd access point..."
+    sudo /usr/sbin/hostapd -B /etc/hostapd/hostapd.conf
+    /bin/sleep 2
 
-  echo "Configuring IP..."
-  sudo ifconfig wlan0 10.0.0.200 netmask 255.0.0.0
-  /bin/sleep 2
+    echo "Configuring IP..."
+    sudo ifconfig wlan0 10.0.0.200 netmask 255.0.0.0
+    /bin/sleep 2
+
+  else
+    showRadiodanClient
+  fi
+
 }
-
 showAccessPoint() {
   oldConfig=/etc/nginx/sites-enabled/radiodan_client
   if [ -h ${oldConfig} ]
@@ -48,8 +56,6 @@ showRadiodanClient() {
 
   /usr/sbin/service nginx reload
 }
-
-
 # Exit early if no wifi dongle
 wifiInterface=$(/sbin/ifconfig | /bin/grep -F wlan0)
 if [ -z "$wifiInterface" ]
@@ -61,7 +67,13 @@ else
   echo "Wifi adapter connected"
 fi
 
+wpa_cli_status=$(/sbin/wpa_cli status)
+
+echo "wpa_cli_status:"
+echo "$wpa_cli_status"
+
 connected=$(/sbin/wpa_cli status | /bin/grep COMPLETED)
+
 if [ -z "$connected" ]
 then
   createAdHocNetwork
@@ -77,4 +89,3 @@ then
 else
   showRadiodanClient
 fi
-
