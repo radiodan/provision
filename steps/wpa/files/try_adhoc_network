@@ -55,6 +55,10 @@ showAccessPoint() {
 
 showRadiodanClient() {
   oldConfig=/etc/nginx/sites-enabled/wpa_cli_web_redirect
+
+  echo "Stopping DNSMasq"
+  /usr/sbin/service dnsmasq stop
+
   if [ -h ${oldConfig} ]
   then
     /bin/rm ${oldConfig}
