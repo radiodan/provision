@@ -28,6 +28,14 @@ createAdHocNetwork(){
     sudo ifconfig wlan0 10.0.0.200 netmask 255.0.0.0
     /bin/sleep 2
 
+    echo "Starting wpa-cli-web"
+    /etc/init.d/wpa-cli-web start
+
+    echo "Starting DNSMasq"
+    /usr/sbin/service dnsmasq start
+
+    echo "Symlink Access Point"
+    showAccessPoint
   else
     showRadiodanClient
   fi
@@ -47,6 +55,10 @@ showAccessPoint() {
 
 showRadiodanClient() {
   oldConfig=/etc/nginx/sites-enabled/wpa_cli_web_redirect
+
+  echo "Stopping DNSMasq"
+  /usr/sbin/service dnsmasq stop
+
   if [ -h ${oldConfig} ]
   then
     /bin/rm ${oldConfig}
@@ -77,15 +89,6 @@ connected=$(/sbin/wpa_cli status | /bin/grep COMPLETED)
 if [ -z "$connected" ]
 then
   createAdHocNetwork
-
-  echo "Starting wpa-cli-web"
-  /etc/init.d/wpa-cli-web start
-
-  echo "Starting DNSMasq"
-  /usr/sbin/service dnsmasq start
-
-  echo "Symlink Access Point"
-  showAccessPoint
 else
   showRadiodanClient
 fi
