@@ -1,5 +1,6 @@
 mkdir -pv /etc/supervisor/conf.d/ && \
   mkdir -pv /etc/supervisor/available/ && \
+    cp -v ${RADIODAN_CONF}/general /etc/supervisor/available/general.conf && \
     cp -v ${RADIODAN_CONF}/radiodan-system /etc/supervisor/available/radiodan-system.conf && \
     cp -v ${RADIODAN_CONF}/radiodan-type-example /etc/supervisor/available/radiodan-type-example.conf && \
     cp -v ${RADIODAN_CONF}/radiodan-type-magic /etc/supervisor/available/radiodan-type-magic.conf && \
