@@ -14,7 +14,6 @@ command=/opt/radiodan/apps/debug/current/debug
 autostart=true
 autorestart=true
 redirect_stderr=true
-<<<<<<< HEAD
 stdout_logfile_backups=1
 #
 # Radiodan broker
@@ -24,6 +23,4 @@ autostart=true
 autorestart=true
 redirect_stderr=true
 stdout_logfile_backups=1
-=======
-stdout_logfile_backups=1
->>>>>>> 5fa9ca463db4cfa970e5c7ec2c58ec06fa161799
+
