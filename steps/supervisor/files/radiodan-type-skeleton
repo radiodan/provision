@@ -1,0 +1,21 @@
+# Radiodan skeleton app and services
+[group:skeleton]
+programs=radiodan-skeleton,radiodan-server
+
+# Audio server
+[program:radiodan-server]
+directory=/opt/radiodan/apps/server/current
+command=/opt/node/bin/node ./bin/server /opt/radiodan/apps/skeleton/current/config/radiodan-config.json
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile_backups=1
+
+# Skeleton prototype app
+[program:radiodan-skeleton]
+directory=/opt/radiodan/apps/skeleton/current
+command=/opt/node/bin/node main.js
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile_backups=1

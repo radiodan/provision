@@ -1,13 +1,5 @@
 # Radidoan system services
 
-# Radiodan cease shutdown daemon
-[program:radiodan-cease]
-command=/opt/radiodan/apps/cease/current/cease
-autostart=true
-autorestart=true
-redirect_stderr=true
-stdout_logfile_backups=1
-
 # Radiodan debug server
 [program:radiodan-debug]
 command=/opt/radiodan/apps/debug/current/debug
