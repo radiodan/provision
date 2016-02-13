@@ -16,3 +16,6 @@ These instructions assume you're starting from a blank disk image of Raspbian.
 You can view all the possible steps by running `./provision`.
 Setting a `LOG_LEVEL` environment variable to `info` will hide the output of the provisioning commands.
 
+## SSH Key
+
+You should overwrite `steps/ssh/files/id_radiodan.pub` with your own public SSH key. After provisioning, you can use this key to ssh/scp files onto the Pi without having to enter a password.
