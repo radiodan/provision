@@ -1,0 +1,22 @@
+#!/bin/sh
+
+name=$1
+app_path=/opt/radiodan/apps/$name
+
+if [ -z "$name" ]
+then
+  echo "Creates supervisor conf files for a radiodan app"
+  echo "using a Procfile"
+  echo "Usage: radiodan-default-app <name>"
+  echo "       <name> is a directory in /opt/radiodan/apps/"
+  exit
+fi
+
+echo "Making $app_path the default"
+
+supervisorctl stop all
+rm /etc/supervisor/conf.d/radiodan*.conf
+cd $app_path
+nf export --type supervisord --app radiodan --out /etc/supervisor/conf.d --cwd $app_path
+supervisorctl reload
+supervisorctl start all
