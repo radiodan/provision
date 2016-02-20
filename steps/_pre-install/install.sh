@@ -23,6 +23,3 @@
 
 # update firmware
 #  apt-get install -y rpi-update && rpi-update -y
-
-# Upstart
-  #yes 'Yes, do as I say!' | apt-get -y --force-yes install upstart
