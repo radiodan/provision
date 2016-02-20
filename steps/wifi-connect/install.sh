@@ -1,5 +1,5 @@
 mkdir -p /var/cache/apt/archives/ && \
-  cp ${RADIODAN_CONF}/files/connman_1.21-1.2_armhf.deb-pi1 /var/cache/apt/archives/ && \
+  cp -v ${RADIODAN_CONF}/connman_1.21-1.2_armhf.deb-pi1 /var/cache/apt/archives/ && \
   apt-get install -y \
       bind9 \
       bridge-utils \

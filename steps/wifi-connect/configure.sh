@@ -1,5 +1,5 @@
 mkdir /etc/connman && \
-  cp ${RADIODAN_CONF}/files/connman-main.conf /etc/connman/main.conf && \
+  cp ${RADIODAN_CONF}/connman-main.conf /etc/connman/main.conf && \
   systemctl stop bind9.service && \
   systemctl disable bind9.service && \
   chown root /etc/bind/rndc.key && \
