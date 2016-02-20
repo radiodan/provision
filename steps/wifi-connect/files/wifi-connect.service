@@ -1,0 +1,18 @@
+[Unit]
+Description=Configure wifi
+Requires=connman.service dhcpcd.service
+After=connman.service dhcpcd.service
+
+[Service]
+WorkingDirectory=/opt/radiodan/wifi-connect
+ExecStart=/opt/radiodan/wifi-connect/start
+Restart=on-failure
+StandardOutput=syslog
+SyslogIdentifier=wifi-connect
+Type=idle
+Environment=PORTAL_SSID=radiodan-configuration
+Environment=PORTAL_PASSPHRASE=
+Environment=PORTAL_PORT=5000
+
+[Install]
+WantedBy=multi-user.target

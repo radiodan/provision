@@ -1,0 +1,13 @@
+[Unit]
+Description=Connection service
+
+[Service]
+Type=dbus
+BusName=net.connman
+Restart=on-failure
+ExecStart=/usr/sbin/connmand -n --nodnsproxy
+StandardOutput=syslog
+SyslogIdentifier=connman
+
+[Install]
+WantedBy=multi-user.target
