@@ -11,6 +11,7 @@ mkdir -p /var/cache/apt/archives/ && \
       wireless-tools \
       connman && \
   mkdir -p /opt/radiodan && \
+  rm -r /opt/radiodan/wifi-connect && \
   git clone https://github.com/resin-io/resin-wifi-connect.git /opt/radiodan/wifi-connect && \
   cd /opt/radiodan/wifi-connect/ && \
   JOBS=MAX npm install --production && \
