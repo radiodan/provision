@@ -11,11 +11,6 @@
 # remove rubbish from /opt/
   rm -rf /opt/Wolfram
 
-# set jessie as main source of packages
-  cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
-    sed -i -e 's/ \(stable\|wheezy\)/ testing/ig' /etc/apt/sources.list && \
-    cat /etc/apt/sources.list.bak >> /etc/apt/sources.list
-
 # clean up distro
   apt-get update
 
