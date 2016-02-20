@@ -15,5 +15,5 @@ mkdir -p /var/cache/apt/archives/ && \
   git clone https://github.com/resin-io/resin-wifi-connect.git /opt/radiodan/wifi-connect && \
   cd /opt/radiodan/wifi-connect/ && \
   JOBS=MAX npm install --production && \
-  /opt/radiodan/wifi-connect/node_modules/.bin/bower install && \
+  /opt/radiodan/wifi-connect/node_modules/.bin/bower --allow-root install && \
   /opt/radiodan/wifi-connect/node_modules/.bin/coffee -c ./src
