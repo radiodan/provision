@@ -1,6 +1,5 @@
-mkdir -p /var/cache/apt/archives/ && \
-  cp -v ${RADIODAN_CONF}/connman_1.21-1.2_armhf.deb-pi1 /var/cache/apt/archives/connman_1.21-1.2_armhf.deb && \
-  apt-get install -y \
+dpkg -i ${RADIODAN_CONF}/connman_1.21-1.2_armhf.deb && \
+  apt-get install -y -f \
       bind9 \
       bridge-utils \
       iptables \
@@ -8,8 +7,7 @@ mkdir -p /var/cache/apt/archives/ && \
       libexpat-dev \
       net-tools \
       usbutils \
-      wireless-tools \
-      connman && \
+      wireless-tools && \
   mkdir -p /opt/radiodan && \
   rm -rf /opt/radiodan/wifi-connect && \
   git clone https://github.com/resin-io/resin-wifi-connect.git /opt/radiodan/wifi-connect && \
