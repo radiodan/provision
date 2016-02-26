@@ -1,0 +1,53 @@
+upstream debug {
+  server 127.0.0.1:8090 max_fails=0;
+}
+
+upstream nodejs {
+  server 127.0.0.1:5000 max_fails=0;
+}
+
+server {
+  root /opt/radiodan/static/;
+
+  error_page 403 404 405 500 501 502 503 504 /radiodan404.html;
+
+  location /radiodan404.html {
+    internal;
+  }
+
+  location /debug {
+    proxy_pass  http://debug;
+
+    proxy_intercept_errors on;
+    proxy_redirect off;
+    proxy_http_version 1.1;
+    proxy_buffering off;
+    proxy_cache off;
+
+    proxy_set_header Connection '';
+    proxy_set_header Host $host ;
+    proxy_set_header X-Real-IP $remote_addr ;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for ;
+    proxy_set_header X-Forwarded-Proto https;
+
+    chunked_transfer_encoding off;
+  }
+
+  location / {
+    proxy_pass  http://nodejs;
+
+    proxy_intercept_errors on;
+    proxy_redirect off;
+    proxy_http_version 1.1;
+    proxy_buffering off;
+    proxy_cache off;
+
+    proxy_set_header Connection '';
+    proxy_set_header Host $host ;
+    proxy_set_header X-Real-IP $remote_addr ;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for ;
+    proxy_set_header X-Forwarded-Proto https;
+
+    chunked_transfer_encoding off;
+  }
+}
