@@ -9,4 +9,6 @@ mkdir -p /etc/connman && \
   cp -v ${RADIODAN_CONF}/connman.service /etc/systemd/system/connman.service && \
   cp -v ${RADIODAN_CONF}/wifi-connect.service /etc/systemd/system/wifi-connect.service && \
   chmod +x /opt/radiodan/wifi-connect/start && \
-  systemctl enable wifi-connect
+  systemctl enable wifi-connect && \
+  cp -rv ${RADIODAN_CONF}/forget-wifi-networks /usr/local/bin/forget-wifi-networks && \
+    chmod +x /usr/local/bin/forget-wifi-networks
