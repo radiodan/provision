@@ -7,7 +7,7 @@ A set of scripts and configs to take a vanilla pi to a radiodan.
 These instructions assume you're starting from a blank disk image of Raspbian.
 
 1. Log into the Raspberry Pi
-2. `sudo raspi-config` to Expand filesystem and Overclock (900MHz)
+2. `sudo raspi-config` to Expand filesystem
 3. Restart and log in again
 4. If your Pi doesn't have Ruby or Git, you should `sudo apt-get update && sudo apt-get install ruby git`
 5. `git clone https://github.com/radiodan/provision`
