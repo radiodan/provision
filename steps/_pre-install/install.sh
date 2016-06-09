@@ -5,7 +5,6 @@
 
 # remove default rubbish from /home/pi
   rm -rfv /home/pi/python_games && \
-    rm -rfv /home/pi/Desktop && \
     rm -rfv /home/pi/ocr_pi.png
 
 # remove rubbish from /opt/
