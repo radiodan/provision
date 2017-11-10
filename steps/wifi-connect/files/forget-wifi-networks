@@ -5,6 +5,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-rm -rf /var/lib/connman
-rm -f /data/connections.json
-echo "Now reboot"
+echo "Forgetting networks and shutting down"
+wifi-connect --clear=true
+shutdown now
