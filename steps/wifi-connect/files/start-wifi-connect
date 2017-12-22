@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Run wi-fi connect which will either:
+#  - start AP if no existing connections
+#  - try to connect to previous networks
+wifi-connect --clear=false
+
+# See if networkmanager has a connection
+# Returns 0 if connected, 1 if not connected
+nm-online --timeout 10
+
+not_connected=$?
+
+if [ $not_connected -eq 1 ]; then
+  echo Not connected
+  wifi-connect --clear=true
+
+  # Now see if we're connected
+  # systemd will run this script again if not
+  nm-online --timeout 10
+else
+  echo Connected
+fi

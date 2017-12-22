@@ -1,17 +1,12 @@
-dpkg -i ${RADIODAN_CONF}/connman_1.21-1.2_armhf.deb && \
-  apt-get install -y -f \
-      bind9 \
-      bridge-utils \
-      iptables \
-      libdbus-1-dev \
-      libexpat-dev \
-      net-tools \
-      usbutils \
-      wireless-tools && \
-  mkdir -p /opt/radiodan && \
-  rm -rf /opt/radiodan/wifi-connect && \
-  git clone https://github.com/radiodan/resin-wifi-connect.git /opt/radiodan/wifi-connect && \
-  cd /opt/radiodan/wifi-connect/ && \
-  JOBS=MAX npm install --production && \
-  /opt/radiodan/wifi-connect/node_modules/.bin/bower --allow-root install && \
-  /opt/radiodan/wifi-connect/node_modules/.bin/coffee -c ./src
+INSTALL_UI_DIR=/usr/local/share/wifi-connect/ui
+RELEASE_URL="https://api.github.com/repos/radiodan/wifi-connect-ui/releases/latest"
+
+download_regex='browser_download_url": "\K.*\.tar\.gz'
+
+curl https://raw.githubusercontent.com/resin-io/resin-wifi-connect/master/scripts/raspbian-install.sh | bash -s -- -y && \
+  download_url=$(curl "$RELEASE_URL" -s | grep -hoP "$download_regex") && \
+  download_dir=$(mktemp -d) && \
+  curl -Ls "$download_url" | tar -xz --strip-components 1 -C "$download_dir" && \
+  rm -r $INSTALL_UI_DIR && \
+  mkdir -p $INSTALL_UI_DIR && \
+  mv $download_dir/* $INSTALL_UI_DIR
